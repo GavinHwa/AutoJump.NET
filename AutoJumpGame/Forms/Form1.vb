@@ -11,7 +11,7 @@ Public Class Form1
     '窗体加载事件处理程序
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         GameManager.Robot = New SimpleRobot()
-        Dim path = InputBox("Please input the adb.exe absolute path", "Adb Path", "E:\Android\SDK\platform-tools\adb.exe")
+        Dim path = InputBox("Please enter an absolute path to adb.exe", "Adb Path", "E:\Android\SDK\platform-tools\adb.exe")
         GameManager.Device = New AndroidDevice(path)
         Timer2.Start()
     End Sub
