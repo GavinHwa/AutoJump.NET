@@ -6,9 +6,22 @@ Imports AutoJump.Core
 ''' </summary>
 Public Class SimpleRobot
     Implements IGameRobot
+
+    Const PercentOffsetX As Single = 1 / 30
+    Const PercentOffsetY As Single = 1 / 3
+
+    Const PercentUponX As Single = 29 / 30
+    Const PercentUponY As Single = 2 / 3
+
+    Const PercentCharacter As Single = 1.2 / 32
+
+    Const PercentFlagOffset As Single = 1 / 5
+
+    Const PercentDistance As Single = 2
+
     Public Function GetNextTap(image As Bitmap) As TapInformation Implements IGameRobot.GetNextTap
         Dim pair As PositionPair = Solve(image)
-        Return New TapInformation(New Vector2(100, 100), pair.Distance * 4)
+        Return New TapInformation(New Vector2(100, 100), pair.Distance * PercentDistance)
     End Function
 
     Private Function Solve(image As Bitmap) As PositionPair
@@ -16,10 +29,10 @@ Public Class SimpleRobot
         Dim width = image.Width
         Dim height = image.Height
         Using pg = Graphics.FromImage(image)
-            Dim offsetX As Integer = 10
-            Dim offsetY As Integer = 220
-            Dim uponX = width - 10
-            Dim uponY = 500 - 1
+            Dim offsetX As Integer = width * PercentOffsetX
+            Dim offsetY As Integer = height * PercentOffsetY
+            Dim uponX = width * PercentUponX
+            Dim uponY = height * PercentUponY
 
             '生成聚类
             Dim clusters = GenerateClusters(image, offsetX, offsetY, uponX, uponY)
@@ -28,14 +41,14 @@ Public Class SimpleRobot
 
             '聚类中心(目标落点）
             Dim center1 = cluster1.GetCenter()
-            DrawCluster(image, Pens.Blue, cluster1)
             Console.WriteLine($"cluster:{cluster1.Vertices.Count}")
-
             '聚类中心(小人位置）
-            Dim center2 = cluster2.GetCenter() + New Vector2(0, 22)
-            DrawCluster(image, Pens.Green, cluster2)
+            Dim center2 = cluster2.GetCenter() + New Vector2(0, height * PercentCharacter)
             Console.WriteLine($"cluster2:{cluster2.Vertices.Count}")
 
+            '绘制聚类
+            DrawCluster(image, Pens.Blue, cluster1)
+            DrawCluster(image, Pens.Green, cluster2)
             '绘制小人与目标落点的连线
             pg.DrawLine(Pens.Red, center1.X, center1.Y, center2.X, center2.Y)
             '绘制聚类矩形框
@@ -62,7 +75,10 @@ Public Class SimpleRobot
     ''' 返回图像指定区域的聚类集合识别结果
     ''' </summary>
     Private Function GenerateClusters(image As Bitmap, offsetX As Integer, offsetY As Integer, uponX As Integer, uponY As Integer) As Tuple(Of Cluster, Cluster)
-        Dim targetColor2 = Color.FromArgb(255, 54, 57, 100)
+        Dim characterColor = Color.FromArgb(255, 54, 57, 100)
+
+        Dim width = image.Width
+        Dim height = image.Height
 
         Dim flag1 As New Vector2
         Dim flag2 As New Vector2
@@ -73,6 +89,7 @@ Public Class SimpleRobot
             For i = offsetX To uponX
                 Dim current = image.GetPixel(i, j)
                 If Not over1 Then
+                    '搜索落点顶端像素
                     If ColorHelper.CompareBaseRGB(current, image.GetPixel(i, j - 1), 10) = False Then
                         If ColorHelper.CompareBaseRGB(current, image.GetPixel(i - 1, j), 10) = False Then
                             flag1 = New Vector2(i, j + 3)
@@ -80,7 +97,8 @@ Public Class SimpleRobot
                         End If
                     End If
                 Else
-                    If ColorHelper.CompareBaseRGB(current, targetColor2, 25) = True Then
+                    '搜索小人顶端像素
+                    If ColorHelper.CompareBaseRGB(current, characterColor, 25) = True Then
                         flag2 = New Vector2(i, j)
                         over2 = True
                     End If
@@ -94,13 +112,14 @@ Public Class SimpleRobot
         Dim c1 = image.GetPixel(flag1.X, flag1.Y)
         Dim c2 = image.GetPixel(flag2.X, flag2.Y)
 
-        Dim upon1 = flag1.Y + 130
-        Dim upon2 = flag2.Y + 130
+        Dim flagOffset = height * PercentFlagOffset
+
+        Dim upon1 = flag1.Y + flagOffset
+        Dim upon2 = flag2.Y + flagOffset
 
         upon1 = If(upon1 > flag2.Y, flag2.Y, upon1)
-        upon1 = If(upon1 - flag1.Y < 60, flag1.Y + 60, upon1)
+        upon1 = If(upon1 - flag1.Y < flagOffset / 2, flag1.Y + flagOffset / 2, upon1)
         upon2 = If(upon2 > uponY, uponY, upon2)
-
 
         '生成聚类
         Dim cluster1 = GetCluster(image, c1, 0, uponX, flag1.Y, upon1, 15)

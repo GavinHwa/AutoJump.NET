@@ -46,7 +46,7 @@ Partial Class Form1
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.PictureBox1.Location = New System.Drawing.Point(12, 12)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(369, 622)
+        Me.PictureBox1.Size = New System.Drawing.Size(360, 640)
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
@@ -55,7 +55,7 @@ Partial Class Form1
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.ToolStripStatusLabel2})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 675)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(388, 22)
+        Me.StatusStrip1.Size = New System.Drawing.Size(382, 22)
         Me.StatusStrip1.TabIndex = 1
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -68,7 +68,7 @@ Partial Class Form1
         'ToolStripStatusLabel2
         '
         Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
-        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(329, 17)
+        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(323, 17)
         Me.ToolStripStatusLabel2.Spring = True
         Me.ToolStripStatusLabel2.Text = "Device:Null"
         '
@@ -96,7 +96,7 @@ Partial Class Form1
         '
         'Button4
         '
-        Me.Button4.Location = New System.Drawing.Point(298, 3)
+        Me.Button4.Location = New System.Drawing.Point(294, 3)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(78, 29)
         Me.Button4.TabIndex = 5
@@ -115,7 +115,7 @@ Partial Class Form1
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Panel1.Location = New System.Drawing.Point(0, 640)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(388, 35)
+        Me.Panel1.Size = New System.Drawing.Size(382, 35)
         Me.Panel1.TabIndex = 6
         '
         'Label1
@@ -124,7 +124,7 @@ Partial Class Form1
         Me.Label1.BackColor = System.Drawing.SystemColors.Control
         Me.Label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label1.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Label1.Location = New System.Drawing.Point(18, 175)
+        Me.Label1.Location = New System.Drawing.Point(12, 176)
         Me.Label1.Name = "Label1"
         Me.Label1.Padding = New System.Windows.Forms.Padding(6)
         Me.Label1.Size = New System.Drawing.Size(358, 222)
@@ -135,7 +135,7 @@ Partial Class Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(388, 697)
+        Me.ClientSize = New System.Drawing.Size(382, 697)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.StatusStrip1)

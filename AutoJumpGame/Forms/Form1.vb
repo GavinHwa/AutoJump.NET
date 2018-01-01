@@ -93,7 +93,8 @@ Public Class Form1
     ''' 返回移动设备的屏幕图像
     ''' </summary>
     Private Function GetImageFromDevice() As Bitmap
-        Return Convert(GameManager.Device.GetScreenImage, New Rectangle(0, 0, PictureBox1.Width, PictureBox1.Height))
+        Dim image = GameManager.Device.GetScreenImage
+        Return image '(image, New Rectangle(0, 0, PictureBox1.Width, PictureBox1.Height))
     End Function
     ''' <summary>
     ''' 转换指定图像为目标矩形大小
